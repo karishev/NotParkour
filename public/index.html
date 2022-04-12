@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;800&family=Oldenburg&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>NotParkour</title>
+</head>
+
+<body>
+    <h1>NotParkour</h1>
+    <h2>This is definitely not a parkour game.</h2>
+    <div>
+        <!-- <label for="room__name">Room Name:</label> -->
+        <input type="text" id="room__name" name="room__name" minlength="4" placeholder="please enter your room name"
+            required><br><br>
+        <button id="join"> join room </button>
+        <button id="create"> create room</button>
+    </div>
+    <div class="menu__container">
+        <button class="instructions__btn"  id="instructions__btn" type="button" onclick="displayInstructions()">instructions</button>
+        <!-- <button class="scoreboard__btn" type="button">scoreboard</button> -->
+    </div>
+    <div class="instructions__popup" id="popup__image"><img src="instructions.png" width="50%" height="auto"></div>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="landing.js"></script>
+</body>
+
+</html>

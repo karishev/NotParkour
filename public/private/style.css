@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow: hidden;
+}
+body {
+    display: flex;
+    /* justify-content: center; */
+}
+.instructions__popup {
+    z-index: 1;
+    left: 25%;
+    position: absolute;
+    bottom: 20%;
+    display: none;
+}
+
+.menu__container {
+    position: absolute;
+    bottom: 10%;
+    left: 45%;
+}
+
+.menu__container button {
+    margin-left: 20px;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    font-family: 'Oldenburg', sans-serif;
+    color: var(--darker-pink);
+    background-color: var(--pink);
+    cursor: pointer;
+    transition: 0.4s;
+}
