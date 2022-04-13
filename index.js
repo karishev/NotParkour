@@ -76,7 +76,7 @@ private.on("connection", function (socket) {
     else insiderooms[socket.room].push(socket.id);
     //Let everyone in the room know that a new user has joined
     // let joinMsg = "A new user has joined the chat room: " + roomName;
-    private.to(roomName).emit("joined", { msg: insiderooms[socket.room] });
+    private.to(socket.id).emit("joined", insiderooms[socket.room].length - 1);
   });
 
   socket.on("positions1", (data) => {
