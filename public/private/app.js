@@ -614,7 +614,7 @@ class Game {
     fill(154, 196, 73);
     rect(0, this.g, width, height - this.g);
     image(restart, width - 50, 20, 30, 30);
-    image(instruct, width - 100, 20, 40, 40);
+    image(instruct, width - 100, 20, 30, 30);
   }
 }
 
