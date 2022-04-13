@@ -2,7 +2,30 @@ let roomNumber;
 let user;
 let players = [];
 let socket = io("/private");
-
+window.addEventListener("load", () => {
+  socket.on("connect", function () {
+    console.log("Connected");
+    roomNumber = sessionStorage.getItem("room");
+    console.log(roomNumber);
+    socket.emit("room", { room: roomNumber });
+    socket.on("joined", (data) => {
+      whichplayer = data;
+    });
+  });
+  socket.on("nextLvl", (data) => {
+    if (game.counter != data.counter) {
+      game.key = true;
+      game.doorTouched = 2;
+    }
+  });
+  socket.on("restart", () => {
+    game.restart();
+  });
+});
+socket.on("joined", (data) => {
+  whichplayer = data;
+  console.log(data);
+});
 function displayInstructions() {
   instructions = document.getElementById("popup__image");
   if (instructions.style.display == "none") {
@@ -621,7 +644,7 @@ function preload() {
   door_open = loadImage("door_open.png");
 
   movable = loadImage("movable.png");
-  
+
   restart = loadImage("restart.png");
   instruct = loadImage("instruct.png");
 }
@@ -702,7 +725,7 @@ function callEverything() {
 }
 
 function keyPressed() {
-  if (whichplayer == 0 && (key == "W" || key == "w")) {
+  if (whichplayer == 0 && (key == "W" || key == "w" || keyCode === UP_ARROW)) {
     game.player.keys["up"] = true;
     callEverything();
   }
@@ -710,15 +733,15 @@ function keyPressed() {
     game.player.keys["up"] = true;
     callEverything();
   }
-  if (whichplayer == 0 && (key == "A" || key == "a")) {
+  if (whichplayer == 0 && (key == "A" || key == "a" || keyCode === LEFT_ARROW)) {
     game.player.keys["left"] = true;
     callEverything();
   }
-  if (whichplayer == 0 && (key == "D" || key == "d")) {
+  if (whichplayer == 0 && (key == "D" || key == "d" || keyCode === RIGHT_ARROW)) {
     game.player.keys["right"] = true;
     callEverything();
   }
-  if (whichplayer == 1 && (key == "W" || key == "w")) {
+  if (whichplayer == 1 && (key == "W" || key == "w" || keyCode === UP_ARROW)) {
     game.player2.keys["up"] = true;
     callEverything();
   }
@@ -726,11 +749,11 @@ function keyPressed() {
     game.player2.keys["up"] = true;
     callEverything();
   }
-  if (whichplayer == 1 && (key == "A" || key == "a")) {
+  if (whichplayer == 1 && (key == "A" || key == "a" || keyCode === LEFT_ARROW)) {
     game.player2.keys["left"] = true;
     callEverything();
   }
-  if (whichplayer == 1 && (key == "D" || key == "d")) {
+  if (whichplayer == 1 && (key == "D" || key == "d" || keyCode === RIGHT_ARROW)) {
     game.player2.keys["right"] = true;
     callEverything();
   }
@@ -749,7 +772,7 @@ function keyPressed() {
 }
 
 function keyReleased() {
-  if (whichplayer == 0 && (key == "W" || key == "w")) {
+  if (whichplayer == 0 && (key == "W" || key == "w" || keyCode === UP_ARROW)) {
     game.player.keys["up"] = false;
     callEverything();
   }
@@ -757,15 +780,15 @@ function keyReleased() {
     game.player.keys["up"] = false;
     callEverything();
   }
-  if (whichplayer == 0 && (key == "A" || key == "a")) {
+  if (whichplayer == 0 && (key == "A" || key == "a" || keyCode === LEFT_ARROW)) {
     game.player.keys["left"] = false;
     callEverything();
   }
-  if (whichplayer == 0 && (key == "D" || key == "d")) {
+  if (whichplayer == 0 && (key == "D" || key == "d" || keyCode === RIGHT_ARROW)) {
     game.player.keys["right"] = false;
     callEverything();
   }
-  if (whichplayer == 1 && (key == "W" || key == "w")) {
+  if (whichplayer == 1 && (key == "W" || key == "w" || keyCode === UP_ARROW)) {
     game.player2.keys["up"] = false;
     callEverything();
   }
@@ -773,11 +796,11 @@ function keyReleased() {
     game.player2.keys["up"] = false;
     callEverything();
   }
-  if (whichplayer == 1 && (key == "A" || key == "a")) {
+  if (whichplayer == 1 && (key == "A" || key == "a" || keyCode === LEFT_ARROW)) {
     game.player2.keys["left"] = false;
     callEverything();
   }
-  if (whichplayer == 1 && (key == "D" || key == "d")) {
+  if (whichplayer == 1 && (key == "D" || key == "d" || keyCode === RIGHT_ARROW)) {
     game.player2.keys["right"] = false;
     callEverything();
   }
@@ -791,15 +814,16 @@ function mouseClicked() {
     mouseY <= 50
   ) {
     // game.restart();c
-    console.log("BLYAAAT");
     socket.emit("restart");
   }
-  if (mouseX >= width - 100 &&
+  if (
+    mouseX >= width - 100 &&
     mouseX <= width - 60 &&
     mouseY >= 20 &&
-    mouseY <= 60) {
-      displayInstructions();
-    }
+    mouseY <= 60
+  ) {
+    displayInstructions();
+  }
 }
 
 // image(restart, width-50,20, 30, 30);
