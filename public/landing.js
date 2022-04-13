@@ -29,13 +29,13 @@ window.addEventListener("load", () => {
 
   joining.addEventListener("click", () => {
     if (roomNumber.value == "") {
-      alert("write something a room number");
+      alert("write a room name");
       return;
     }
     socket.emit("checkRoom", { id: socket.id, room: roomNumber.value });
     socket.on("checkedRoom", (data) => {
       if (data.create == "no") {
-        alert("no such room number!");
+        alert("no such room name!");
         return;
       } else if (data.create == "full") {
         alert("the room is full!");
@@ -51,7 +51,7 @@ window.addEventListener("load", () => {
     socket.on("createdRoom", (data) => {
       console.log(data);
       if (data.create == "no") {
-        alert("there is a room with such number");
+        alert("there is a room with such name");
         return;
       } else {
         sessionStorage.setItem("room", roomNumber.value);
